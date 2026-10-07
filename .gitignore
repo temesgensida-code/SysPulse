@@ -1,0 +1,16 @@
+# Build artifacts
+/target/
+**/*.rs.bk
+Cargo.lock.bk
+
+# Log & export files
+*.log
+syspulse-*.json
+syspulse-*.md
+
+# Editor & OS files
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
