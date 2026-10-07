@@ -6,7 +6,13 @@ draws live analytical charts, and raises alerts when something goes wrong.
 
 ## Installation
 
+one linear install
+```bash
+git clone https://github.com/temesgensida-code/SysPulse.git && cd SysPulse && ./install.sh
+```
+
 Run the automated installer to build and install `syspulse` directly to your PATH:
+
 
 ```bash
 ./install.sh
@@ -47,34 +53,7 @@ syspulse --print-config > ~/.config/syspulse/config.toml
 | UX | 7 tabs, mouse (tabs, rows, wheel), pause, adjustable refresh (250 ms - 10 s), chart window (1m-1h), 3 themes incl. colour-blind palette, help overlay, responsive layout down to tiny terminals |
 | Export | `e` saves a `.json` + `.md` report; `--snapshot` prints text / json / md |
 
-## Keys
 
-`Tab`/`h`/`l`/`1-7` switch tab · `space` pause · `+`/`-` refresh rate · `w` chart window · `e` export · `?` help · `q` quit  
-Processes: `j`/`k` move · `c m i n` sort · `r` reverse · `/` filter · `Enter` details · `x` kill · `K` kernel threads
-
-## Config
-
-`~/.config/syspulse/config.toml` (or `--config path`). Every field is optional. Run
-`--print-config` for the full default file: thresholds, refresh rate, theme, log file, export dir.
-
-## Architecture
-
-```
-collector thread ──Msg::Snapshot──▶ main thread (App)
-  metrics.rs (sysinfo,               ├─ history.rs   bounded time series + stats/regression/z-score
-  /proc, /sys)      ◀──Cmd::Kill──   ├─ health.rs    checks, scores, edge-triggered alerts
-                                     ├─ app.rs       state + input handling (no rendering)
-                                     └─ ui.rs        ratatui rendering (reads App only)
-```
-
-* The collector sleeps on a command channel, so kill requests and interval changes apply instantly.
-* The UI redraws only when something changed, so the monitor itself stays cheap.
-* Terminal state is restored on exit **and** on panic.
-
-## Tests
-
-`cargo test`: 32 tests covering the maths (percentiles, regression, z-score), the health engine
-(thresholds, transitions, forecasts), input handling, and rendering of every tab at sizes from 160x50 down to 1x1.
 
 ## Notes
 
