@@ -4,6 +4,8 @@ A realtime computer **health-check TUI** for the terminal, written in Rust with
 [ratatui](https://ratatui.rs). It samples your machine, scores its health from 0 to 100,
 draws live analytical charts, and raises alerts when something goes wrong.
 
+![TERMINAL DEMO](asset/demo.gif)
+
 ## Installation
 
 one linear install
